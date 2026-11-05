@@ -1,0 +1,36 @@
+# Example reverse-proxy configuration (Caddy v2).
+#
+# The web terminal builds its WebSocket URL as:
+#     wss://<your-host>/?XTransformPort=3030
+#
+# This proxy does two things:
+#   1. Gives you automatic HTTPS/WSS (required — the agent refuses plain ws://
+#      on any non-localhost address).
+#   2. Routes any request carrying "?XTransformPort=<port>" to that local port,
+#      so the browser can reach the relay without exposing extra public ports.
+#
+# Copy to /etc/caddy/Caddyfile, replace your-domain.com, then:  systemctl reload caddy
+
+your-domain.com {
+	@transform_port {
+		query XTransformPort=*
+	}
+
+	handle @transform_port {
+		reverse_proxy localhost:{query.XTransformPort} {
+			header_up Host {host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Real-IP {remote_host}
+		}
+	}
+
+	handle {
+		reverse_proxy localhost:3000 {
+			header_up Host {host}
+			header_up X-Forwarded-For {remote_host}
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Real-IP {remote_host}
+		}
+	}
+}

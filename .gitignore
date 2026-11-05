@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Secrets — NEVER commit these
+token.txt
+.env
+.env.*
+*.pem
+
+# Logs & OS noise
+*.log
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
