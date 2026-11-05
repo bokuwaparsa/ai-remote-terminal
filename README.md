@@ -11,12 +11,6 @@ computer and control it from a clean web terminal — streaming output, live
 status, file retrieval, and a hard kill switch. Nothing is installed, nothing
 persists, and every command is echoed locally before it runs.
 
-> [!WARNING]
-> **Ethical use only.** This tool gives shell access to whatever machine the
-> agent runs on. Use it **only on computers you own or are explicitly
-> authorized to administer**. The design is intentionally transparent — every
-> command is printed in the agent window — because hidden access is never OK.
-
 ---
 
 ## Why this exists
